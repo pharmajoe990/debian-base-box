@@ -1,0 +1,3 @@
+- name: Copy nodoc instruction for apt
+  copy: src=01_nodoc dest=/etc/dpkg/dpkg.cfg.d/01_nodoc
+  become: yes

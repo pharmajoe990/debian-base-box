@@ -1,0 +1,14 @@
+- name: Delete unnecessary path
+  file: path="{{ item }}" state=absent
+  become: yes
+  with_items:
+    - /usr/share/locale/
+    - /usr/share/i18n/locales/
+    - /usr/share/doc/
+    - /usr/share/man/
+    - /usr/share/groff/
+    - /usr/share/info/
+    - /usr/share/lintian/
+    - /usr/share/linda/
+    - /var/cache/man/
+    - /var/lib/apt/lists/

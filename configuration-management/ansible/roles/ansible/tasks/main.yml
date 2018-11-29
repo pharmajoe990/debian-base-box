@@ -1,0 +1,17 @@
+- name: Install required packages
+  apt: name={{ item }} update_cache=yes
+  become: yes
+  with_items:
+  - python-pip
+
+- name: Upgrade pip
+  pip: name=pip state=latest extra_args=--upgrade
+  become: yes
+
+- name: Install setuptools
+  pip: name=setuptools state=latest
+  become: yes
+
+- name: Install ansible
+  pip: name=ansible version=2.4.3.0
+  become: yes

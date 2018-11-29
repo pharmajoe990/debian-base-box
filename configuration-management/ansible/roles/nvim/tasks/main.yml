@@ -1,0 +1,80 @@
+- name: Install NeoVim
+  apt: pkg={{ item }}
+  with_items:
+  - neovim
+  become: yes
+
+- name: Update .vimrc
+  lineinfile: dest=~/.config/nvim/init.vim line={{ item }} create=yes
+  with_items:
+  - execute pathogen#infect()
+  - syntax on
+  - filetype plugin indent on
+  - :set tabstop=2
+  - :set shiftwidth=2
+  - :set expandtab
+  - :set nobackup
+  - :set noswapfile
+  - let g:vim_markdown_folding_style_pythonic = 1
+  - map <C-n> :NERDTreeToggle<CR>
+  - autocmd BufEnter * EnableStripWhitespaceOnSave
+  - call plug#begin('~/.vim/plugged')
+  - Plug 'vim-airline/vim-airline'
+  - Plug 'vim-airline/vim-airline-themes'
+  - Plug 'ctrlpvim/ctrlp.vim'
+  - Plug 'tpope/vim-surround'
+  - Plug 'tpope/vim-fugitive'
+  - Plug 'tpope/vim-commentary'
+  - Plug 'scrooloose/nerdtree'
+  - Plug 'ngmy/vim-rubocop'
+  - Plug 'chriskempson/base16-vim'
+  - Plug 'vim-syntastic/syntastic'
+  - Plug 'airblade/vim-gitgutter'
+  - Plug 'SirVer/ultisnips'
+  - Plug 'honza/vim-snippets'
+  - Plug 'chr4/nginx.vim'
+  - Plug 'elixir-editors/vim-elixir'
+  - Plug 'jremmen/vim-ripgrep'
+  - call plug#end()
+  - set shiftwidth=2
+  - set relativenumber
+  - set number
+  - set encoding=utf-8
+  - filetype plugin on
+  - set cursorline
+  - let base16colorspace=256            
+  - syntax enable
+  - set background=dark
+  - if filereadable(expand("~/.vimrc_background"))
+  -   let base16colorspace=256
+  -   source ~/.vimrc_background
+  - endif
+  - inoremap jj <esc>
+  - map <C-n> :NERDTreeToggle<CR>
+  - let mapleader="\<space>"
+  - nnoremap <leader>s :w<cr>
+  - inoremap <leader>s <C-c>:w<cr>
+  - nnoremap <leader>n :bn<cr>
+  - nnoremap <leader>p :bp<cr>
+  - nnoremap <leader>d :bd<cr>
+  - nnoremap <leader>t :tabnext<cr>
+  - nnoremap <C-j> 5j
+  - nnoremap <C-k> 5k
+  - nnoremap <C-down> <C-w><down>
+  - nnoremap <C-up> <C-w><up>
+  - nnoremap <C-left> <C-w><left>
+  - nnoremap <C-right> <C-w><right>
+  - let g:airline#extensions#tabline#enabled = 1
+  - let g:airline_theme = 'base16'
+  - let g:GitGutterEnable = 1
+  - let g:UltiSnipsUsePythonVersion = 3
+  - let g:UltiSnipsExpandTrigger="<tab>"
+  - let g:UltiSnipsJumpForwardTrigger="<c-b>"
+  - let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+  - let g:deoplete#enable_at_startup = 1
+  - let g:ctrlp_extensions = ['line']
+  - let g:ctrlp_cmd = 'CtrlPLastMode'
+  - let g:ruby_host_prog = '$HOME/.rbenv/versions/2.5.1/bin/neovim-ruby-host' " Path to Ruby, to avoid rbenv shimming in
+
+- name: Set vim as git editor
+  git_config: name=core.editor scope=global value=nvim
