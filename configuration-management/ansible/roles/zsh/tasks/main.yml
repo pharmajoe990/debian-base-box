@@ -1,0 +1,21 @@
+- name: Install ZSH
+  apt: pkg={{ item }}
+  with_items:
+  - zsh
+  become: yes
+
+- name: Clone oh-my-zsh repo
+  git: repo=git://github.com/robbyrussell/oh-my-zsh.git
+       dest=/home/vagrant/.oh-my-zsh
+
+- name: Update .zshrc
+  lineinfile: dest=~/.zshrc line={{ item }} create=yes
+  with_items:
+    - export ZSH=/home/vagrant/.oh-my-zsh
+    - ZSH_THEME="gallois"
+    - plugins=(git docker docker-compose zsh-autosuggestions)
+    - source $ZSH/oh-my-zsh.sh
+
+- name: Set zsh as default shell
+  user: name=vagrant shell=/usr/bin/zsh
+  become: yes
