@@ -10,6 +10,11 @@
       apt: pkg=avahi-daemon
       become: yes
 
+    - name: Install git
+      apt: pkg=git
+      become: yes
+
+
   roles:
     - zsh
     - docker
