@@ -18,9 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'debian', primary: true do |debian|
     debian.vm.box = 'bento/debian-9.5'
 
-    debian.vm.hostname = 'account-right-analysis-vagrant'
-    debian.vm.network :private_network, ip: '10.2.1.3'
-    debian.vm.network "forwarded_port", guest: 8081, host: 8081
+    debian.vm.hostname = 'debian-dev-box'
+    debian.vm.network :private_network, ip: '10.2.1.30'
 
     debian.vm.provision 'ansible' do |ansible|
       ansible.playbook = PLAYBOOK
